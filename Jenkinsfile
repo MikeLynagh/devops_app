@@ -1,6 +1,6 @@
 pipeline {
     agent any
-    
+
     tools {
         maven 'Maven'
         jdk 'JDK17'
@@ -21,7 +21,7 @@ pipeline {
 
         stage('Test') {
             steps {
-                sh 'mvn test'  // Run unit tests
+                sh 'mvn test' // Run unit tests
             }
             post {
                 always {
@@ -45,10 +45,15 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                sh '''
-                    cp target/web-app-0.0.1-SNAPSHOT.war /var/lib/tomcat9/webapps/
-                    sudo systemctl restart tomcat9
-                '''
+                sshagent(['jenkins-ssh-key']) {
+                    sh '''
+                        # Copy WAR file to VM
+                        scp -P 2222 target/web-app-0.0.1-SNAPSHOT.war mike@localhost:/home/mike/
+                        
+                        # SSH into VM and move WAR file to Tomcat directory
+                        ssh -p 2222 mike@localhost "sudo cp /home/mike/web-app-0.0.1-SNAPSHOT.war /var/lib/tomcat9/webapps/ && sudo systemctl restart tomcat9"
+                    '''
+                }
             }
         }
     }
