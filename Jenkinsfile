@@ -46,7 +46,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 sh '''
-                    cp target/web-app-0.0.1-SNAPSHOT.war /path/to/tomcat/webapps/
+                    cp target/web-app-0.0.1-SNAPSHOT.war /var/lib/tomcat9/webapps/
                     sudo systemctl restart tomcat9
                 '''
             }
