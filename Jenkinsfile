@@ -46,13 +46,15 @@ pipeline {
         stage('Deploy') {
             steps {
                 sshagent(['jenkins-ssh-key']) {
-                    sh '''
-                        # Copy WAR file to VM
-                        scp -P 2222 target/web-app-0.0.1-SNAPSHOT.war mike@localhost:/home/mike/
-                        
-                        # SSH into VM and move WAR file to Tomcat directory
-                        ssh -p 2222 mike@localhost "sudo cp /home/mike/web-app-0.0.1-SNAPSHOT.war /var/lib/tomcat9/webapps/ && sudo systemctl restart tomcat9"
-                    '''
+            		sh '''
+                		# Test SSH connection first
+                		ssh -p 2222 -o StrictHostKeyChecking=no mike@localhost "echo 'SSH Connection Test Successful'"
+                
+                		# If connection works, proceed with deployment
+                		scp -P 2222 target/web-app-0.0.1-SNAPSHOT.war mike@localhost:/home/mike/
+                
+                		ssh -p 2222 mike@localhost "sudo cp /home/mike/web-app-0.0.1-SNAPSHOT.war /var/lib/tomcat9/webapps/ && sudo systemctl restart tomcat9"
+            		'''
                 }
             }
         }
