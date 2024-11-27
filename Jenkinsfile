@@ -9,13 +9,13 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'git@github.com:MikeLynagh/devops_app.git'  
+                git branch: 'main', url: 'git@github.com:MikeLynagh/devops_app.git'
             }
         }
 
         stage('Build') {
             steps {
-                sh 'mvn clean install -DskipTests'  
+                sh 'mvn clean install -DskipTests'
             }
         }
 
@@ -25,30 +25,29 @@ pipeline {
             }
             post {
                 always {
-                    junit '**/target/surefire-reports/*.xml'  
+                    junit '**/target/surefire-reports/*.xml'
                 }
             }
-        } 
+        }
 
         stage('Package') {
             steps {
-                sh 'mvn package -DskipTests'  
-                archiveArtifacts artifacts: 'target/*.war', fingerprint: true  
+                sh 'mvn package -DskipTests'
+                archiveArtifacts artifacts: 'target/*.war', fingerprint: true
             }
         }
 
         stage('Approval') {
             steps {
-                input message: 'Deploy to production?', ok: 'Deploy'  
+                input message: 'Deploy to production?', ok: 'Deploy'
             }
         }
 
         stage('Deploy') {
             steps {
-                // Update the path and the Tomcat location for your VM
                 sh '''
-                    cp target/web-app-0.0.1-SNAPSHOT.war /path/to/tomcat/webapps/  
-                    sudo systemctl restart tomcat9 
+                    cp target/web-app-0.0.1-SNAPSHOT.war /path/to/tomcat/webapps/
+                    sudo systemctl restart tomcat9
                 '''
             }
         }
