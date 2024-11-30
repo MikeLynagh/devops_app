@@ -46,15 +46,15 @@ pipeline {
         stage('Deploy') {
             steps {
                 sshagent(['jenkins-ssh-key']) {
-            		sh '''
-                		# Test SSH connection first
-                		ssh -p 2222 -o StrictHostKeyChecking=no mike@localhost "echo 'SSH Connection Test Successful'"
-                
-                		# If connection works, proceed with deployment
-                		scp -P 2222 target/web-app-0.0.1-SNAPSHOT.war mike@localhost:/home/mike/
-                
-                		ssh -p 2222 mike@localhost "sudo cp /home/mike/web-app-0.0.1-SNAPSHOT.war /var/lib/tomcat9/webapps/ && sudo systemctl restart tomcat9"
-            		'''
+                    sh '''
+                        # Test SSH connection first
+                        ssh -p 2222 -o StrictHostKeyChecking=no mike@192.168.8.142 "echo 'SSH Connection Test Successful'"
+                        
+                        # If connection works, proceed with deployment
+                        scp -P 2222 target/web-app-0.0.1-SNAPSHOT.war mike@192.168.8.142:/home/mike/
+                        
+                        ssh -p 2222 mike@192.168.8.142 "sudo cp /home/mike/web-app-0.0.1-SNAPSHOT.war /var/lib/tomcat9/webapps/ && sudo systemctl restart tomcat9"
+                    '''
                 }
             }
         }
