@@ -1,4 +1,4 @@
-package com.devops.web_app.model;
+package com.example.web_app.model;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
