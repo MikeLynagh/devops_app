@@ -54,6 +54,14 @@ public class Petition {
         return signatures;
     }
 
+    public void addSignature(Signature signature) {
+        this.signatures.add(signature);
+    }
+
+    public int getCurrentSignatureCount() {
+        return signatures.size();
+    }
+
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create Petition</title>
+</head>
+<body>
+    <h1>Create a New Petition</h1>
+    
+    <form action="/web-app-0.0.1-SNAPSHOT/petition/create" method="post">
+        <div>
+            <label for="title">Petition Title:</label><br>
+            <input type="text" id="title" name="title" required>
+        </div>
+        <br>
+        <div>
+            <label for="description">Description:</label><br>
+            <textarea id="description" name="description" rows="4" required></textarea>
+        </div>
+        <br>
+        <div>
+            <label for="target">Target Signatures:</label><br>
+            <input type="number" id="target" name="target" required>
+        </div>
+        <br>
+        <button type="submit">Create Petition</button>
+    </form>
+    
+    <br>
+    <a href="/web-app-0.0.1-SNAPSHOT/">Back to Home</a>
+</body>
+</html>
