@@ -5,55 +5,28 @@
     <style>
         .petition {
             border: 1px solid #ddd;
-            margin: 10px 0;
+            margin: 10px;
             padding: 15px;
             border-radius: 5px;
         }
-        .petition h3 {
-            color: #2c3e50;
-            margin-top: 0;
-        }
-        .target-count {
-            color: #777;
-            font-style: italic;
-        }
-        .back-link {
-            display: inline-block;
-            margin-top: 20px;
-            color: #3498db;
-            text-decoration: none;
-        }
-        .back-link:hover {
-            text-decoration: underline;
-        }
     </style>
-    <script>
-        window.onload = function() {
-            fetch('/web-app-0.0.1-SNAPSHOT/api/petitions')
-                .then(response => response.json())
-                .then(petitions => {
-                    const list = document.getElementById('petitionList');
-                    petitions.forEach(petition => {
-                        list.innerHTML += `
-                            <div class="petition">
-                                <h3>${petition.title}</h3>
-                                <p>${petition.description}</p>
-                                <p class="target-count">Target Signatures: ${petition.targetSignatures}</p>
-                            </div>
-                        `;
-                    });
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    document.getElementById('petitionList').innerHTML = 
-                        '<p style="color: red;">Error loading petitions. Please try again later.</p>';
-                });
-        }
-    </script>
 </head>
 <body>
     <h1>Current Petitions</h1>
-    <div id="petitionList"></div>
-    <a href="/web-app-0.0.1-SNAPSHOT/" class="back-link">Back to Home</a>
+    
+    <div class="petition">
+        <h3>Moycullen Greenway</h3>
+        <p>Create a greenway to remove traffic from main roads commuting from Oughterard to Galway</p>
+        <p>Target Signatures: 5000</p>
+    </div>
+
+    <div class="petition">
+        <h3>GLUAS for Galway</h3>
+        <p>Create a light rail line from Knocknacarra to Oranmore to improve traffic congestion within the city</p>
+        <p>Target Signatures: 10000</p>
+    </div>
+    
+    <br>
+    <a href="/web-app-0.0.1-SNAPSHOT/">Back to Home</a>
 </body>
 </html>
